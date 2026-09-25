@@ -1,14 +1,8 @@
-export default async function WorkoutDetails({
-    params,
-}: {
-    params: Promise<{ id: string }>;
-}) {
-    const { id } = await params;
-
+export default function WorkoutDetails() {
     return (
         <main>
         <h1>Workout Details</h1>
-        <p>Workout ID: {id}</p>
+        <p>This is a workout details page.</p>
         </main>
     );
 }
