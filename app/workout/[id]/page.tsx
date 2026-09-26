@@ -19,9 +19,9 @@ type Workout = {
 
 export default async function WorkoutDetails({
     params,
-    }: {
+}: {
     params: Promise<{ id: string }>;
-    }) {
+}) {
     const { id } = await params;
 
     const response = await fetch(
@@ -34,7 +34,6 @@ export default async function WorkoutDetails({
         <main className="mx-auto max-w-7xl px-5 py-16 sm:px-8">
             <div className="grid gap-10 lg:grid-cols-2">
 
-                {/* Image */}
                 <div>
                     <Image
                         src={workout.image}
@@ -45,7 +44,6 @@ export default async function WorkoutDetails({
                     />
                 </div>
 
-                    {/* Details */}
                 <div>
                     <p className="text-sm font-bold uppercase tracking-[0.25em] text-[#ccff00]">
                         {workout.difficulty}
@@ -59,57 +57,76 @@ export default async function WorkoutDetails({
                         {workout.description}
                     </p>
 
-                    {/* Muscle groups */}
                     <div className="mt-6 flex flex-wrap gap-2">
                         {workout.muscleGroups.map((muscle) => (
-                        <span
-                            key={muscle}
-                            className="border border-white/20 px-3 py-2 text-xs font-bold uppercase text-[#ccff00]"
-                        >
-                            {muscle}
-                        </span>
+                            <span
+                                key={muscle}
+                                className="border border-white/20 px-3 py-2 text-xs font-bold uppercase text-[#ccff00]"
+                            >
+                                {muscle}
+                            </span>
                         ))}
                     </div>
 
-                    {/* Stats */}
                     <div className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-3">
                         <div className="border border-white/10 p-4">
-                            <p className="text-xs uppercase text-gray-500">Equipment</p>
-                            <p className="mt-2 font-bold">{workout.equipment}</p>
+                            <p className="text-xs uppercase text-gray-500">
+                                Equipment
+                            </p>
+                            <p className="mt-2 font-bold">
+                                {workout.equipment}
+                            </p>
                         </div>
 
                         <div className="border border-white/10 p-4">
-                            <p className="text-xs uppercase text-gray-500">Sets</p>
-                            <p className="mt-2 font-bold">{workout.sets}</p>
+                            <p className="text-xs uppercase text-gray-500">
+                                Sets
+                            </p>
+                            <p className="mt-2 font-bold">
+                                {workout.sets}
+                            </p>
                         </div>
 
                         <div className="border border-white/10 p-4">
-                            <p className="text-xs uppercase text-gray-500">Reps</p>
-                            <p className="mt-2 font-bold">{workout.reps}</p>
+                            <p className="text-xs uppercase text-gray-500">
+                                Reps
+                            </p>
+                            <p className="mt-2 font-bold">
+                                {workout.reps}
+                            </p>
                         </div>
 
                         <div className="border border-white/10 p-4">
-                            <p className="text-xs uppercase text-gray-500">Duration</p>
-                            <p className="mt-2 font-bold">{workout.duration} min</p>
+                            <p className="text-xs uppercase text-gray-500">
+                                Duration
+                            </p>
+                            <p className="mt-2 font-bold">
+                                {workout.duration} min
+                            </p>
                         </div>
 
                         <div className="border border-white/10 p-4">
-                            <p className="text-xs uppercase text-gray-500">Calories</p>
+                            <p className="text-xs uppercase text-gray-500">
+                                Calories
+                            </p>
                             <p className="mt-2 font-bold">
                                 {workout.caloriesBurned} kcal
                             </p>
                         </div>
 
                         <div className="border border-white/10 p-4">
-                            <p className="text-xs uppercase text-gray-500">Rating</p>
-                            <p className="mt-2 font-bold">★ {workout.rating}</p>
+                            <p className="text-xs uppercase text-gray-500">
+                                Rating
+                            </p>
+                            <p className="mt-2 font-bold">
+                                ★ {workout.rating}
+                            </p>
                         </div>
                     </div>
 
-                    {/* Instructions */}
                     <div className="mt-10">
                         <h2 className="text-2xl font-black uppercase">
-                        Instructions
+                            Instructions
                         </h2>
 
                         <div className="mt-5 space-y-4">
@@ -117,7 +134,7 @@ export default async function WorkoutDetails({
                                 <div
                                     key={index}
                                     className="flex gap-4 border-b border-white/10 pb-4"
-                                    >
+                                >
                                     <span className="font-black text-[#ccff00]">
                                         0{index + 1}
                                     </span>
@@ -130,16 +147,7 @@ export default async function WorkoutDetails({
                         </div>
                     </div>
 
-                    {/* Buttons */}
-                    <div className="mt-10 flex flex-wrap gap-4">
-                        <button className="bg-[#ccff00] px-6 py-4 text-sm font-black uppercase text-black">
-                        Add to Today&apos;s Plan
-                        </button>
-
-                        <button className="border border-white/20 px-6 py-4 text-sm font-black uppercase text-white">
-                        Save for Later
-                        </button>
-                    </div>
+                    <WorkoutActions workout={workout} />
                 </div>
             </div>
         </main>
