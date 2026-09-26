@@ -1,60 +1,118 @@
 "use client";
 
-"use client";
-
+import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useWorkout } from "../context/WorkoutContext";
 
 export default function Navbar() {
     const { plan, saved } = useWorkout();
+    const pathname = usePathname();
+
+    const isWorkoutActive = pathname === "/";
+    const isPlanActive = pathname === "/my-plan";
 
     return (
-        <header className="border-b border-white/10 bg-[#0f1115]">
-            <div className="mx-auto flex min-h-19 max-w-7xl items-center justify-between gap-4 px-5 sm:px-8">
+        <header className="border-b border-white/10 bg-[#0c0d10]">
+            <div className="mx-auto max-w-7xl px-5 sm:px-8">
 
-                {/* Logo */}
-                <Link
-                    href="/"
-                    className="shrink-0 text-xl font-black tracking-tight text-white"
-                >
-                    FIT<span className="text-[#ccff00]">LOG</span>
-                </Link>
+                {/* Top Row */}
+                <div className="flex h-20.25 items-center justify-between">
 
-                {/* Navigation */}
-                <nav className="hidden items-center gap-8 md:flex">
+                    {/* Logo */}
                     <Link
                         href="/"
-                        className="text-sm font-bold uppercase tracking-wide text-white transition hover:text-[#ccff00]"
+                        className="flex shrink-0 items-center gap-3"
                     >
-                        Workout
+                        <Image
+                            src="/logo.png"
+                            alt="FitLog"
+                            width={42}
+                            height={42}
+                            className="h-9 w-9 object-contain"
+                        />
+
+                        <span className="text-xl font-black tracking-wide text-white">
+                            FITLOG
+                        </span>
+                    </Link>
+
+                    {/* Desktop Navigation */}
+                    <nav className="ml-8 hidden items-center gap-2 md:flex">
+                        <Link
+                            href="/"
+                            className={`rounded-full px-5 py-2 text-sm font-bold uppercase transition ${
+                                isWorkoutActive
+                                    ? "bg-[#283618] text-[#ccff00]"
+                                    : "text-gray-400 hover:text-white"
+                            }`}
+                        >
+                            Workouts
+                        </Link>
+
+                        <Link
+                            href="/my-plan"
+                            className={`rounded-full px-5 py-2 text-sm font-bold uppercase transition ${
+                                isPlanActive
+                                    ? "bg-[#283618] text-[#ccff00]"
+                                    : "text-gray-400 hover:text-white"
+                            }`}
+                        >
+                            My Plan
+                        </Link>
+                    </nav>
+
+                    {/* Counters */}
+                    <div className="flex items-center gap-2">
+
+                        {/* Plan */}
+                        <Link
+                            href="/my-plan"
+                            className="flex items-center gap-2 rounded-full border border-white/10 bg-[#111318] px-3 py-2 text-xs font-bold uppercase text-gray-300 transition hover:border-[#ccff00]/40 sm:px-4"
+                        >
+                            <span>Plan</span>
+                            <span className="w-5 h-5 rounded-full bg-[#CCFF00] text-black font-bold text-lg flex items-center justify-center">
+                                {plan.length}
+                            </span>
+                        </Link>
+
+                        {/* Saved */}
+                        <Link
+                            href="/my-plan"
+                            className="flex items-center gap-2 rounded-full border border-white/10 bg-[#111318] px-3 py-2 text-xs font-bold uppercase text-gray-300 transition hover:border-[#ccff00]/40 sm:px-4"
+                        >
+                            <span>Saved</span>
+                            <span className="w-5 h-5 rounded-full bg-[#CCFF00] text-black font-bold text-lg flex items-center justify-center">
+                                {saved.length}
+                            </span>
+                        </Link>
+                    </div>
+                </div>
+
+                {/* Mobile Navigation */}
+                <nav className="flex border-t border-white/10 py-3 md:hidden">
+                    <Link
+                        href="/"
+                        className={`flex-1 py-2 text-center text-xs font-bold uppercase tracking-wider transition ${
+                            isWorkoutActive
+                                ? "text-[#ccff00]"
+                                : "text-gray-500 hover:text-white"
+                        }`}
+                    >
+                        Workouts
                     </Link>
 
                     <Link
                         href="/my-plan"
-                        className="text-sm font-bold uppercase tracking-wide text-white transition hover:text-[#ccff00]"
+                        className={`flex-1 py-2 text-center text-xs font-bold uppercase tracking-wider transition ${
+                            isPlanActive
+                                ? "text-[#ccff00]"
+                                : "text-gray-500 hover:text-white"
+                        }`}
                     >
                         My Plan
                     </Link>
                 </nav>
-
-                {/* Counters */}
-                <div className="flex items-center gap-2">
-                    <Link
-                        href="/my-plan"
-                        className="flex items-center gap-2 border border-[#ccff00] bg-[#ccff00] px-3 py-2 text-xs font-black uppercase text-black transition hover:bg-transparent hover:text-[#ccff00]"
-                    >
-                        <span>Plan</span>
-                        <span>{plan.length}</span>
-                    </Link>
-
-                    <Link
-                        href="/my-plan"
-                        className="flex items-center gap-2 border border-white/30 px-3 py-2 text-xs font-black uppercase text-white transition hover:border-[#ccff00] hover:text-[#ccff00]"
-                    >
-                        <span>Saved</span>
-                        <span>{saved.length}</span>
-                    </Link>
-                </div>
 
             </div>
         </header>

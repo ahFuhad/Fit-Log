@@ -21,8 +21,10 @@ type Workout = {
 type WorkoutContextType = {
     plan: Workout[];
     saved: Workout[];
+
     addToPlan: (workout: Workout) => void;
     saveWorkout: (workout: Workout) => void;
+
     removeFromPlan: (id: number) => void;
     removeFromSaved: (id: number) => void;
     markAsDone: (id: number) => void;

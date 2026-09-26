@@ -25,8 +25,12 @@ export default async function WorkoutDetails({
     const { id } = await params;
 
     const response = await fetch(
-        `https://api.abcz.workers.dev/api/fitlog/${id}`
+        `https://api.api-store.workers.dev/api/fitlog/${id}`
     );
+
+    if (!response.ok) {
+        throw new Error(`API error: ${response.status}`);
+    }
 
     const workout: Workout = await response.json();
 
@@ -69,6 +73,7 @@ export default async function WorkoutDetails({
                     </div>
 
                     <div className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-3">
+
                         <div className="border border-white/10 p-4">
                             <p className="text-xs uppercase text-gray-500">
                                 Equipment
@@ -122,6 +127,7 @@ export default async function WorkoutDetails({
                                 ★ {workout.rating}
                             </p>
                         </div>
+
                     </div>
 
                     <div className="mt-10">
@@ -130,20 +136,22 @@ export default async function WorkoutDetails({
                         </h2>
 
                         <div className="mt-5 space-y-4">
-                            {workout.instructions.map((instruction, index) => (
-                                <div
-                                    key={index}
-                                    className="flex gap-4 border-b border-white/10 pb-4"
-                                >
-                                    <span className="font-black text-[#ccff00]">
-                                        0{index + 1}
-                                    </span>
+                            {workout.instructions.map(
+                                (instruction, index) => (
+                                    <div
+                                        key={index}
+                                        className="flex gap-4 border-b border-white/10 pb-4"
+                                    >
+                                        <span className="font-black text-[#ccff00]">
+                                            0{index + 1}
+                                        </span>
 
-                                    <p className="text-gray-300">
-                                        {instruction}
-                                    </p>
-                                </div>
-                            ))}
+                                        <p className="text-gray-300">
+                                            {instruction}
+                                        </p>
+                                    </div>
+                                )
+                            )}
                         </div>
                     </div>
 

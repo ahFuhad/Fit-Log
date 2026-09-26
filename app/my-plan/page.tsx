@@ -17,12 +17,7 @@ export default function MyPlan() {
     const [activeTab, setActiveTab] = useState<"plan" | "saved">("plan");
     const [toast, setToast] = useState("");
 
-    const currentWorkouts = activeTab === "plan" ? plan : saved;
-
-    const workouts = currentWorkouts.filter(
-        (workout, index, array) =>
-            array.findIndex((item) => item.id === workout.id) === index
-    );
+    const workouts = activeTab === "plan" ? plan : saved;
 
     const totalMinutes = plan.reduce(
         (total, workout) => total + workout.duration,
@@ -66,20 +61,20 @@ export default function MyPlan() {
                     FITLOG
                 </p>
 
-                <h1 className="mt-3 text-5xl font-black uppercase">
+                <h1 className="mt-3 text-4xl font-black uppercase sm:text-5xl">
                     MY PLAN
                 </h1>
 
-                <p className="mt-3 text-gray-400">
+                <p className="mt-3 max-w-xl text-gray-400">
                     Cap of five lifts for today. Finish them, then load more.
                 </p>
             </div>
 
             {/* Metrics */}
-            <div className="mt-10 grid gap-4 sm:grid-cols-3">
+            <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-3">
 
-                <div className="border border-white/10 p-6">
-                    <p className="text-xs font-bold uppercase text-gray-500">
+                <div className="border border-white/10 bg-white/2 p-5 sm:p-6">
+                    <p className="text-xs font-bold uppercase tracking-wider text-gray-500">
                         Exercises
                     </p>
 
@@ -88,8 +83,8 @@ export default function MyPlan() {
                     </p>
                 </div>
 
-                <div className="border border-white/10 p-6">
-                    <p className="text-xs font-bold uppercase text-gray-500">
+                <div className="border border-white/10 bg-white/2 p-5 sm:p-6">
+                    <p className="text-xs font-bold uppercase tracking-wider text-gray-500">
                         Minutes
                     </p>
 
@@ -98,8 +93,8 @@ export default function MyPlan() {
                     </p>
                 </div>
 
-                <div className="border border-white/10 p-6">
-                    <p className="text-xs font-bold uppercase text-gray-500">
+                <div className="border border-white/10 bg-white/2 p-5 sm:p-6">
+                    <p className="text-xs font-bold uppercase tracking-wider text-gray-500">
                         Calories
                     </p>
 
@@ -111,12 +106,12 @@ export default function MyPlan() {
             </div>
 
             {/* Tabs */}
-            <div className="mt-12 flex gap-8 border-b border-white/10">
+            <div className="mt-12 flex gap-6 border-b border-white/10 sm:gap-8">
 
                 <button
                     type="button"
                     onClick={() => setActiveTab("plan")}
-                    className={`cursor-pointer pb-4 text-sm font-black uppercase transition ${
+                    className={`cursor-pointer pb-4 text-xs font-black uppercase tracking-wider transition sm:text-sm ${
                         activeTab === "plan"
                             ? "border-b-2 border-[#ccff00] text-[#ccff00]"
                             : "text-gray-500 hover:text-white"
@@ -128,7 +123,7 @@ export default function MyPlan() {
                 <button
                     type="button"
                     onClick={() => setActiveTab("saved")}
-                    className={`cursor-pointer pb-4 text-sm font-black uppercase transition ${
+                    className={`cursor-pointer pb-4 text-xs font-black uppercase tracking-wider transition sm:text-sm ${
                         activeTab === "saved"
                             ? "border-b-2 border-[#ccff00] text-[#ccff00]"
                             : "text-gray-500 hover:text-white"
@@ -148,7 +143,7 @@ export default function MyPlan() {
                         NOTHING HERE YET
                     </h2>
 
-                    <p className="mt-3 text-gray-400">
+                    <p className="mx-auto mt-3 max-w-md text-gray-400">
                         {activeTab === "plan"
                             ? "Browse the library and add a lift to get today moving."
                             : "Save a workout from the library and it will appear here."}
@@ -184,17 +179,18 @@ export default function MyPlan() {
                                 ×
                             </button>
 
+                            {/* Image */}
                             <Image
                                 src={workout.image}
                                 alt={workout.name}
                                 width={800}
                                 height={500}
-                                className="h-56 w-full object-cover"
+                                className="h-52 w-full object-cover sm:h-56"
                             />
 
                             <div className="p-5">
 
-                                <h3 className="text-2xl font-black uppercase">
+                                <h3 className="pr-10 text-xl font-black uppercase sm:text-2xl">
                                     {workout.name}
                                 </h3>
 
@@ -202,7 +198,8 @@ export default function MyPlan() {
                                     {workout.equipment}
                                 </p>
 
-                                <div className="mt-5 flex flex-wrap gap-5 text-sm text-gray-400">
+                                {/* Stats */}
+                                <div className="mt-5 flex flex-wrap gap-x-5 gap-y-2 text-sm text-gray-400">
                                     <span>
                                         {workout.duration} min
                                     </span>
@@ -217,11 +214,11 @@ export default function MyPlan() {
                                 </div>
 
                                 {/* Buttons */}
-                                <div className="mt-6 flex flex-wrap gap-3">
+                                <div className="mt-6 flex flex-col gap-3 min-[400px]:flex-row">
 
                                     <Link
                                         href={`/workout/${workout.id}`}
-                                        className="inline-block cursor-pointer border border-white/20 px-5 py-3 text-xs font-black uppercase transition hover:border-[#ccff00] hover:text-[#ccff00] active:scale-95"
+                                        className="inline-block cursor-pointer border border-white/20 px-5 py-3 text-center text-xs font-black uppercase transition hover:border-[#ccff00] hover:text-[#ccff00] active:scale-95"
                                     >
                                         View Details
                                     </Link>
@@ -229,7 +226,9 @@ export default function MyPlan() {
                                     {activeTab === "plan" && (
                                         <button
                                             type="button"
-                                            onClick={() => handleDone(workout.id)}
+                                            onClick={() =>
+                                                handleDone(workout.id)
+                                            }
                                             className="cursor-pointer bg-[#ccff00] px-5 py-3 text-xs font-black uppercase text-black transition hover:bg-white active:scale-95"
                                         >
                                             Mark as Done
@@ -247,7 +246,7 @@ export default function MyPlan() {
 
             {/* Toast */}
             {toast && (
-                <div className="fixed bottom-6 right-6 z-50 border border-[#ccff00] bg-[#0f1115] px-5 py-4 text-sm font-bold text-white shadow-lg">
+                <div className="fixed bottom-5 left-5 right-5 z-50 border border-[#ccff00] bg-[#0f1115] px-5 py-4 text-center text-sm font-bold text-white shadow-lg sm:left-auto sm:right-6 sm:text-left">
                     {toast}
                 </div>
             )}

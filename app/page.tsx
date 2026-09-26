@@ -26,12 +26,14 @@ export default function Home() {
   useEffect(() => {
     async function fetchWorkouts() {
       try {
-        const response = await fetch(
-          "https://api.abcz.workers.dev/api/fitlog"
-        );
+        const response = await fetch("https://api.api-store.workers.dev/api/fitlog");
+
+        if (!response.ok) {
+          throw new Error(`API error: ${response.status}`);
+        }
 
         const data: Workout[] = await response.json();
-
+        console.log(data);
         setWorkouts(data);
       } catch (error) {
         console.error("Failed to fetch workouts:", error);
@@ -63,10 +65,7 @@ export default function Home() {
     <main>
       <Hero />
 
-      <section
-        id="library"
-        className="mx-auto max-w-7xl px-6 py-20"
-      >
+      <section id="library" className="mx-auto max-w-7xl px-6 py-20">
         {/* Section Header */}
         <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
           <div>
@@ -74,9 +73,7 @@ export default function Home() {
               WORKOUT LIBRARY
             </p>
 
-            <h2 className="mt-3 text-4xl font-black uppercase">
-              THE LIBRARY
-            </h2>
+            <h2 className="mt-3 text-4xl font-black uppercase">THE LIBRARY</h2>
 
             <p className="mt-3 text-gray-400">
               Twelve lifts covering every major muscle group.
@@ -128,10 +125,7 @@ export default function Home() {
           /* Workout Grid */
           <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {sortedWorkouts.map((workout) => (
-              <WorkoutCard
-                key={workout.id}
-                workout={workout}
-              />
+              <WorkoutCard key={workout.id} workout={workout} />
             ))}
           </div>
         )}
