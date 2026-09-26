@@ -15,6 +15,7 @@ export default function MyPlan() {
     } = useWorkout();
 
     const [activeTab, setActiveTab] = useState<"plan" | "saved">("plan");
+    const [toast, setToast] = useState("");
 
     const currentWorkouts = activeTab === "plan" ? plan : saved;
 
@@ -33,16 +34,27 @@ export default function MyPlan() {
         0
     );
 
+    function showToast(message: string) {
+        setToast(message);
+
+        setTimeout(() => {
+            setToast("");
+        }, 2500);
+    }
+
     function handleRemove(id: number) {
         if (activeTab === "plan") {
             removeFromPlan(id);
+            showToast("Workout removed from your plan");
         } else {
             removeFromSaved(id);
+            showToast("Workout removed from saved");
         }
     }
 
     function handleDone(id: number) {
         markAsDone(id);
+        showToast("Workout marked as done");
     }
 
     return (
@@ -230,6 +242,13 @@ export default function MyPlan() {
                         </div>
                     ))}
 
+                </div>
+            )}
+
+            {/* Toast */}
+            {toast && (
+                <div className="fixed bottom-6 right-6 z-50 border border-[#ccff00] bg-[#0f1115] px-5 py-4 text-sm font-bold text-white shadow-lg">
+                    {toast}
                 </div>
             )}
 
