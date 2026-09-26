@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import { WorkoutProvider } from "./context/WorkoutContext";
 
 export const metadata: Metadata = {
   title: "FitLog",
@@ -16,9 +17,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <Navbar />
-        {children}
-        <Footer />
+        <WorkoutProvider>
+          <Navbar />
+          {children}
+          <Footer />
+        </WorkoutProvider>
       </body>
     </html>
   );
